@@ -1,1 +1,6 @@
-*.*
+# Ignore all dot files
+.*
+
+# Except for .git and .gitignore
+!.gitignore
+!.git
