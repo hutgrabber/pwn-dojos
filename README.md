@@ -1,0 +1,2 @@
+## ENPM809V - Advanced Hacking of Linux & Embedded Systems - University of Maryland
+A course that provides an in-depth understanding of finding flaws in Linux and software within embedded devices, as well as how to exploit and protect them. The course is offensive-focused, but also discusses mitigations to protect programs. The prerequisites include familiarity with Linux, x86_64 assembly language, and programming in C and Python. The course is hands-on, requiring a 64-bit x86-based computer running the operating system of choice and VMWare Workstation or Fusion.
