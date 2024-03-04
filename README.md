@@ -5,7 +5,7 @@ A course that provides an in-depth understanding of finding flaws in Linux and s
 The repository is for personal use and will contain all the code for the homework assignments of the ENPM809V course. The code will consist of practical exercises related to finding flaws in Linux and software within embedded devices, exploiting them, and implementing mitigations. The repository will be organized by homework assignments and the final project, with each assignment containing commented code explaining the concepts applied.
 
 ## Topics Covered
-| WEEK | Subject                                  |
+| WEEK | TOPIC                                  |
 | ---- | ---------------------------------------- |
 | 1    | Course Introduction                      |
 | 2    | x86_64 Architecture Review & ROP         |
