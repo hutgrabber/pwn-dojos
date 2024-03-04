@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-import pwn 
+import pwn
+import sys
 
 def start(argv=[], *a, **kw):
     if pwn.args.GDB: # use the gdb script, sudo apt install gdbserver
