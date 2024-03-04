@@ -1,0 +1,1 @@
+There is a cat flag script file that is going will print out the flag. See how many times it actually prints the flag from the race condition demonstrated in class.
