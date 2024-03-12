@@ -2,7 +2,7 @@
 
 UID = 119362914
 Name = "Sparsh Mehta / hutgrabber"
-"Homework 2"
+"Homework 1"
 
 import sys
 from time import sleep
