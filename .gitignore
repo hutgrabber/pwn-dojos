@@ -1,6 +1,6 @@
 # Ignore all dot files
 .*
-
+.DS_Store
 # Except for .git and .gitignore
 !.gitignore
 !.git
