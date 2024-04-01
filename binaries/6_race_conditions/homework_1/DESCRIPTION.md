@@ -1,0 +1,1 @@
+For this homework, there is a race condition that you will need to exploit. You will need to utilize your knowledge of threading to be able to solve this challenge. 
