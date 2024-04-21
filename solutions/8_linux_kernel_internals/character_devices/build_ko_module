@@ -1,0 +1,97 @@
+#!/opt/pwn.college/python
+
+import argparse
+import ctypes
+import grp
+import os
+import shutil
+import socket
+import subprocess
+import sys
+import tempfile
+import textwrap
+import time
+from pwn import *
+import pwn
+
+
+libc = ctypes.CDLL("libc.so.6")
+
+def initialize():
+    os.setegid(os.geteuid())
+
+
+def error(msg):
+    print(msg, file=sys.stderr)
+    exit(1)
+
+def is_privileged():
+    groups = set(grp.getgrgid(group).gr_name for group in os.getgroups())
+    return os.getuid() == 0 or "sudo" in groups
+
+
+
+def build(path, output):
+    os.setuid(os.geteuid())
+
+    with open(path, "r") as f:
+        src = f.read()
+
+    with tempfile.TemporaryDirectory() as workdir:
+        with open(f"{workdir}/kalevala.c", "w") as f:
+            f.write(src)
+
+        with open(f"{workdir}/Makefile", "w") as f:
+            f.write(
+                textwrap.dedent(
+                    f"""
+                    obj-m += flagdevice.o
+
+                    all:
+                    \tmake -C /opt/linux/linux-5.4 M={workdir} modules
+                    clean:
+                    \tmake -C /opt/linux/linux-5.4 M={workdir} clean
+                    """
+                )
+            )
+        #pwn.pause()
+        subprocess.run(["make", "-C", workdir], stdout=sys.stderr, check=True)
+
+        shutil.copy(f"{workdir}/kalevala.ko", "./{output}.ko")
+
+
+def main():
+    global args
+
+    initialize()
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-o", "--output", default="ENPM809V", dest="output", help="File name for the resulting kernel module (without the .ko extension)")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    build_parser = subparsers.add_parser("build", help="privileged: build vm kernel module")
+    build_parser.add_argument("build_path")
+
+
+    args = parser.parse_args()
+
+    #if not is_privileged():
+    #    privilege_checks = {
+    #        "build": args.command != "build",
+    #    }
+    #    for description, validated in privilege_checks.items():
+    #        if not validated:
+    #            error(f"Error: do not have permission to {description}")
+
+    commands = {
+        "build": lambda: build(args.build_path, args.output),
+    }
+
+    try:
+        commands[args.command]()
+    except KeyboardInterrupt:
+        pass
+
+
+if __name__ == '__main__':
+    main()
